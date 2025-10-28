@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard do Administrador</title>
+    <head th:replace="~{fragments/header :: header}"></head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        a {
+            display: block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Bem-vindo, Administrador!</h1>
+
+<div class="card">
+    <h2>Resumo de Vendas</h2>
+    <p>Total de Pedidos: <strong th:text="${totalPedidos}"></strong></p>
+    <p>Total Arrecadado: R$ <strong th:text="${totalVendas}"></strong></p>
+</div>
+
+<div class="card">
+    <h2>Gestão de Cupcakes</h2>
+    <a href="/cupcakes/novo">Cadastrar Novo Cupcake</a>
+    <a href="/cupcakes/all">Ver Lista de Cupcakes</a>
+</div>
+
+<div class="card">
+    <h2>Pedidos</h2>
+    <a href="/admin/listar-pedidos">Verificar Pedidos</a>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

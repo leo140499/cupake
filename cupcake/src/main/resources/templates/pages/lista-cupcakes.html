@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Cupcakes</title>
+    <head th:replace="~{fragments/header :: header}"></head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            margin: 0;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 15px;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .back-link {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        a.back {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a.back:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Lista de Cupcakes</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Produto</th>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Preço</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="produto : ${produtos}">
+        <td><span>🧁</span></td>
+        <td th:text="${produto.nome}">Nome do cupcake</td>
+        <td th:text="${produto.descricao}">Descrição do cupcake</td>
+        <td th:text="${produto.preco}">R$ 0.00</td>
+        <td>
+            <div class="button-container">
+                <a th:href="|/cupcakes/editar/${produto.id}|" class="btn">Editar</a>
+                <a href="#" class="btn"
+                   th:onclick="'event.preventDefault(); deletarProduto(' + ${produto.id} + ');'">Excluir</a>
+
+                <script>
+                    function deletarProduto(id) {
+                        if(confirm('Tem certeza que deseja deletar este cupcake?')) {
+                            fetch('/cupcakes/deletar/' + id, { method: 'DELETE' })
+                                .then(() => window.location.href = '/cupcakes/all')
+                                .catch(err => alert('Erro ao deletar cupcake!'));
+                        }
+                    }
+                </script>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="button-container" style="margin-top: 30px;">
+    <a th:href="@{/cupcakes/novo}" class="btn">Cadastrar Novo Cupcake</a>
+</div>
+
+<div class="back-link">
+    <a class="back" th:href="@{/admin/dashboard}">← Voltar para o Dashboard</a>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

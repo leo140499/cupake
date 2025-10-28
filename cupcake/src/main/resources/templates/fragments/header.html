@@ -1,0 +1,23 @@
+<!-- /templates/fragments/header.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle}">Cupcake</title>
+    <style>
+        header {
+            background-color: #007bff; /* azul bonito */
+            color: white;
+            padding: 15px 30px;
+            font-size: 24px;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+<header th:fragment="header">
+    🍰 Cupcake Store
+</header>
+</body>
+</html>

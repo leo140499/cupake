@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Cupcake</title>
+    <head th:replace="~{fragments/header :: header}"></head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 360px;
+        }
+
+        input, textarea {
+            display: block;
+            margin-bottom: 15px;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            resize: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Editar Cupcake</h2>
+
+<form th:action="@{/cupcakes/salvarEdicao}" th:object="${produto}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <input type="text" th:field="*{nome}" placeholder="Nome do Cupcake" required />
+    <textarea th:field="*{descricao}" placeholder="Descrição do Cupcake" rows="4" required></textarea>
+    <input type="number" th:field="*{preco}" placeholder="Preço (ex: 5.90)" step="0.01" required />
+
+    <!-- Se quiser futuramente adicionar categoria ou tipo, aqui é um bom lugar -->
+
+    <button type="submit">Cadastrar</button>
+</form>
+
+<div class="back-link">
+    <a th:href="@{/admin/dashboard}">← Voltar para o Dashboard</a>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>
