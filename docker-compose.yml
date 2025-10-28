@@ -1,14 +1,31 @@
 version: '3.8'
 
 services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_DATABASE: cupcake_db
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+
   cupcake-app:
     image: ghcr.io/seu-usuario/cupcake:latest
     container_name: cupcake-app
+    depends_on:
+      - mysql
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://<HOST>:<PORT>/<DB_NAME>?useSSL=false&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: <USERNAME>
-      SPRING_DATASOURCE_PASSWORD: <PASSWORD>
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/cupcake_db?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     restart: always
+
+volumes:
+  mysql_data:
